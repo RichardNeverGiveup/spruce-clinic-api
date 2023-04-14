@@ -11,9 +11,10 @@ class Employees(Base):
     id = Column(Integer, primary_key=True, nullable=False)
     # here we assume all employees is default to be role_id 0 (means "intern" in our roles table, minimum authorization in our clinic)
     # fk should be added later, since we do not have these two tables for now
-    # role_id = Column(Integer, ForeignKey("role.rid", ondelete="SET DEFAULT"), default=0, nullable=False)
+    role_id = Column(Integer, ForeignKey("roles.rid", ondelete="SET DEFAULT"), server_default="0", nullable=False)
     # when we delete a contract, we delete this employee
-    # contract_id = Column(Integer, ForeignKey("contracts.cid", ondelete="CASCADE"), nullable=False)
+    contract_id = Column(Integer, ForeignKey("contracts.cid", ondelete="CASCADE"), nullable=False)
+    
     full_name = Column(String, nullable=False)
     email = Column(String, nullable=False)
     tel = Column(String, nullable=False)
@@ -23,4 +24,19 @@ class Employees(Base):
     experience = Column(Integer, nullable=False)  # how many years
     modified_at = Column(TIMESTAMP(timezone=True), nullable=False, server_default=text('now()'))
 
-    owner = relationship("User")  # 这里会自动去获取对应FK的user表里面的信息
+    # owner = relationship("User")  # 这里会自动去获取对应FK的user表里面的信息
+
+class Roles(Base):
+    __tablename__ = 'roles'
+    rid = Column(Integer, primary_key=True, nullable=False)
+    role_type = Column(String, nullable=False)
+
+class Contracts(Base):
+    __tablename__ = 'contracts'
+    cid = Column(Integer, primary_key=True, nullable=False)
+    # sign a contract online in our system, the joining_date is auto added
+    joining_date = Column(TIMESTAMP(timezone=True), nullable=False, server_default=text('now()'))
+    # default is one month contract
+    contract_duration = Column(Integer, nullable=False, server_default="1")
+    salary = Column(Integer, nullable=False)
+

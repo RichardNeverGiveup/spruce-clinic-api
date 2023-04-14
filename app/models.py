@@ -17,6 +17,8 @@ class Employees(Base):
 
     full_name = Column(String, nullable=False)
     email = Column(String, nullable=False)
+    pwd = Column(String, nullable=False)
+
     tel = Column(String, nullable=False)
     gender = Column(Boolean, nullable=False)  # 0 means female, 1 means male
     address = Column(String, nullable=False)
@@ -45,6 +47,8 @@ class Patients(Base):
     pid = Column(Integer, primary_key=True, nullable=False)
     full_name = Column(String, nullable=False)
     email = Column(String, nullable=False)
+    pwd = Column(String, nullable=False)
+
     gender = Column(Boolean, nullable=False)  # 0 means female, 1 means male
     tel = Column(String, nullable=False)
     address = Column(String, nullable=False)

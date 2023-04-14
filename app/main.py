@@ -3,8 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from .database import engine
 from .config import settings
-from . import models
-# from .routers import post, user, auth
+from .routers import employees
 
 
 app = FastAPI()
@@ -18,4 +17,6 @@ app.add_middleware(
 
 @app.get("/")
 def index():
-    return {"data": "hello clinic"}
+    return {"data": "welcome to spruce clinic api"}
+
+app.include_router(employees.router)

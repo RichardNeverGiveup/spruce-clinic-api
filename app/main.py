@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from .database import engine
 from .config import settings
-from .routers import employees
+from .routers import employees, roles
 
 
 app = FastAPI()
@@ -20,3 +20,4 @@ def index():
     return {"data": "welcome to spruce clinic api"}
 
 app.include_router(employees.router)
+app.include_router(roles.router)

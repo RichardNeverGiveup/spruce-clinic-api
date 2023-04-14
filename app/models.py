@@ -6,12 +6,12 @@ from .database import Base
 
 
 class Employees(Base):
+    """some field of this table should only be exposed to system admin or clinic director"""
     __tablename__ = 'employees'
 
     id = Column(Integer, primary_key=True, nullable=False)
-    # here we assume all employees is default to be role_id 0 (means "intern" in our roles table, minimum authorization in our clinic)
-    # fk should be added later, since we do not have these two tables for now
-    role_id = Column(Integer, ForeignKey("roles.rid", ondelete="CASCADE"), server_default="0", nullable=False)
+    # role_id have no default value
+    role_id = Column(Integer, ForeignKey("roles.rid", ondelete="CASCADE"), nullable=False)
     # when we delete a contract, we delete this employee
     contract_id = Column(Integer, ForeignKey("contracts.cid", ondelete="CASCADE"), nullable=False)
 

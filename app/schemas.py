@@ -59,3 +59,21 @@ class EmployeeUpdate(BaseModel):
     address: Optional[str]
     education: Optional[str]
     experience: Optional[str]
+
+class PatientCreate(BaseModel):
+    full_name: str
+    email: EmailStr
+    pwd: str
+    tel: str
+    gender: bool
+    address: str
+    insurance_number: str
+    surgery_history: str
+    allergy: str
+    drug_history: str
+
+class PatientResponse(PatientCreate):
+    pid: int
+    modified_at: datetime = Field(timezone_aware=True)
+    class Config:
+        orm_mode = True

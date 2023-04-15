@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from .database import engine
 from .config import settings
-from .routers import employees, roles, contracts
+from .routers import employees, roles, contracts, patients
 
 
 app = FastAPI()
@@ -22,3 +22,4 @@ def index():
 app.include_router(employees.router)
 app.include_router(roles.router)
 app.include_router(contracts.router)
+app.include_router(patients.router)

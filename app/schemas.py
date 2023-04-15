@@ -28,3 +28,22 @@ class ContractResponse(BaseModel):
 
     class Config:
         orm_mode = True
+
+class EmployeeCreate(BaseModel):
+    role_id: int
+    contract_id: int
+    full_name: str
+    email: EmailStr
+    pwd: str
+    tel: str
+    gender: bool
+    address: str
+    education: str
+    experience: int
+
+class EmployeeResponse(EmployeeCreate):
+    id: int
+    modified_at: datetime = Field(timezone_aware=True)
+    
+    class Config:
+        orm_mode = True

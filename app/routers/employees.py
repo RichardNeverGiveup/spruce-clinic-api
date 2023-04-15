@@ -49,3 +49,17 @@ def update_employee(id: int, new_employee: schemas.EmployeeCreate, db: Session =
     employee_query.update(new_employee.dict(), synchronize_session=False)
     db.commit()
     return employee_query.first()
+
+@router.patch("/{id}", response_model=schemas.EmployeeResponse)
+def update_employee(id: int, new_employee: schemas.EmployeeUpdate, db: Session = Depends(get_db)):
+    """this patch method is for updating some fields not all of them"""
+    employee_query = db.query(models.Employees).filter(models.Employees.id == id)
+    employee = employee_query.first()
+    if employee == None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Employee with id {id} not found!")
+    # print(employee_query)
+    for k, v in new_employee.dict().items():
+        if(v != None):
+            setattr(employee, k, v)
+    db.commit()
+    return employee_query.first()

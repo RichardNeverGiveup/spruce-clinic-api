@@ -47,3 +47,15 @@ class EmployeeResponse(EmployeeCreate):
     
     class Config:
         orm_mode = True
+
+class EmployeeUpdate(BaseModel):
+    role_id: Optional[int]
+    contract_id: Optional[int]
+    full_name: Optional[str]
+    email: Optional[EmailStr]
+    pwd: Optional[str]
+    tel: Optional[str]
+    gender: Optional[str]
+    address: Optional[str]
+    education: Optional[str]
+    experience: Optional[str]

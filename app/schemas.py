@@ -77,3 +77,16 @@ class PatientResponse(PatientCreate):
     modified_at: datetime = Field(timezone_aware=True)
     class Config:
         orm_mode = True
+
+class AppointmentCreate(BaseModel):
+    patient_id: int
+    doctor_id: int
+    notes: str
+    start_time: datetime = Field(timezone_aware=True)
+    end_time: datetime = Field(timezone_aware=True)
+
+class AppointmentResponse(AppointmentCreate):
+    aid: int
+    modified_at: datetime = Field(timezone_aware=True)
+    class Config:
+        orm_mode = True

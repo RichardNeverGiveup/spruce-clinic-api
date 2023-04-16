@@ -1,0 +1,549 @@
+{
+	"info": {
+		"_postman_id": "07d956b4-f578-4a9f-9ca4-428bd42836e8",
+		"name": "clinicapi",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24275886"
+	},
+	"item": [
+		{
+			"name": "Roles",
+			"item": [
+				{
+					"name": "get role",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}roles/33",
+							"host": [
+								"{{url}}roles"
+							],
+							"path": [
+								"33"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get roles",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}roles",
+							"host": [
+								"{{url}}roles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create role",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"role_type\": \"dir\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}roles",
+							"host": [
+								"{{url}}roles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete role",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}roles/16",
+							"host": [
+								"{{url}}roles"
+							],
+							"path": [
+								"16"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update role",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"role_type\": \"clinic director\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}roles/17",
+							"host": [
+								"{{url}}roles"
+							],
+							"path": [
+								"17"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Contracts",
+			"item": [
+				{
+					"name": "get contracts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}contracts/",
+							"host": [
+								"{{url}}contracts"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get contract",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}contracts/1",
+							"host": [
+								"{{url}}contracts"
+							],
+							"path": [
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create contract",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"contract_duration\": \"12\",\r\n    \"salary\": \"110000\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}contracts",
+							"host": [
+								"{{url}}contracts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete contract",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}contracts/1",
+							"host": [
+								"{{url}}contracts"
+							],
+							"path": [
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update contract",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"joining_date\": \"2023-04-15T05:11:47.633100+00:00\",\r\n    \"contract_duration\": \"24\",\r\n    \"salary\": \"100000\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}contracts/2",
+							"host": [
+								"{{url}}contracts"
+							],
+							"path": [
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Employees",
+			"item": [
+				{
+					"name": "get employees",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}employees",
+							"host": [
+								"{{url}}employees"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get employee",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}employees/1",
+							"host": [
+								"{{url}}employees"
+							],
+							"path": [
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create employee",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"role_id\": \"12\",\r\n    \"contract_id\": \"2\",\r\n    \"full_name\": \"ruilin\",\r\n    \"email\": \"rui@spruce.com\",\r\n    \"pwd\": \"password\",\r\n    \"tel\": \"123456789\",\r\n    \"gender\": \"true\",\r\n    \"address\": \"uplus\",\r\n    \"education\": \"masters\",\r\n    \"experience\": \"2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}employees",
+							"host": [
+								"{{url}}employees"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete employee",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}employees/3",
+							"host": [
+								"{{url}}employees"
+							],
+							"path": [
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update employee",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"role_id\": \"12\",\r\n    \"contract_id\": \"2\",\r\n    \"full_name\": \"ruilin\",\r\n    \"email\": \"rui@spruce.com\",\r\n    \"pwd\": \"password\",\r\n    \"tel\": \"123456789\",\r\n    \"gender\": \"true\",\r\n    \"address\": \"uplus\",\r\n    \"education\": \"masters\",\r\n    \"experience\": \"5\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}employees/4",
+							"host": [
+								"{{url}}employees"
+							],
+							"path": [
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update employee (patch)",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"full_name\": \"ruilin cheng\",\r\n    \"email\": \"rui@spruce.com\",\r\n    \"pwd\": \"password\",\r\n    \"tel\": \"123456789\",\r\n    \"experience\": \"2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}employees/4",
+							"host": [
+								"{{url}}employees"
+							],
+							"path": [
+								"4"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Patients",
+			"item": [
+				{
+					"name": "create patient",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"full_name\": \"amber\",\r\n    \"email\": \"amber@163.com\",\r\n    \"pwd\": \"password\",\r\n    \"tel\": \"123456789\",\r\n    \"gender\": \"true\",\r\n    \"address\": \"lartch st\",\r\n    \"insurance_number\": \"ON123456\",\r\n    \"surgery_history\": \"none\",\r\n    \"allergy\": \"egg\",\r\n    \"drug_history\": \"none\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}patients",
+							"host": [
+								"{{url}}patients"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get patients",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}patients",
+							"host": [
+								"{{url}}patients"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get patient",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}patients/7",
+							"host": [
+								"{{url}}patients"
+							],
+							"path": [
+								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete patient",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}patients/7",
+							"host": [
+								"{{url}}patients"
+							],
+							"path": [
+								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update patient",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"full_name\": \"amber li\",\r\n    \"email\": \"amber@163.com\",\r\n    \"pwd\": \"password\",\r\n    \"tel\": \"123456789\",\r\n    \"gender\": \"true\",\r\n    \"address\": \"lartch st\",\r\n    \"insurance_number\": \"ON123456\",\r\n    \"surgery_history\": \"none\",\r\n    \"allergy\": \"egg\",\r\n    \"drug_history\": \"none\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}patients/8",
+							"host": [
+								"{{url}}patients"
+							],
+							"path": [
+								"8"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Appointments",
+			"item": [
+				{
+					"name": "create appointment",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"patient_id\": \"8\",\r\n    \"doctor_id\": \"4\",\r\n    \"notes\": \"check blood pressure\",\r\n    \"start_time\": \"2023-04-15T06:17:53.586131+00:00\",\r\n    \"end_time\": \"2023-04-15T08:17:53.586131+00:00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}appointments",
+							"host": [
+								"{{url}}appointments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get appointments",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}appointments",
+							"host": [
+								"{{url}}appointments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get appointment",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}appointments/2",
+							"host": [
+								"{{url}}appointments"
+							],
+							"path": [
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete appointment",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}appointments/2",
+							"host": [
+								"{{url}}appointments"
+							],
+							"path": [
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update appointment",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"patient_id\": \"8\",\r\n    \"doctor_id\": \"4\",\r\n    \"notes\": \"check blood pressure and eyes\",\r\n    \"start_time\": \"2023-04-15T06:17:53.586131+00:00\",\r\n    \"end_time\": \"2023-04-15T08:17:53.586131+00:00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}appointments/3",
+							"host": [
+								"{{url}}appointments"
+							],
+							"path": [
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

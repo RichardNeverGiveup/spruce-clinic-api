@@ -2,7 +2,7 @@ from fastapi import Response, status, HTTPException, Depends, APIRouter
 from sqlalchemy.orm import Session
 
 from ..database import get_db
-from ..import models, schemas
+from ..import models, schemas, utils
 router = APIRouter(
     prefix='/patients',
     tags=['patients']
@@ -31,7 +31,10 @@ def get_patient(id: int, db: Session = Depends(get_db)):
 
 @router.post("/", status_code=status.HTTP_201_CREATED, response_model=schemas.PatientResponse)
 def create_patient(patient: schemas.PatientCreate, db: Session = Depends(get_db)):
-    # print(patient)
+    # hash the pwd
+    hashed_password = utils.hash(patient.pwd)
+    patient.pwd = hashed_password
+
     new_patient = models.Patients(**patient.dict())
     db.add(new_patient)
     db.commit()
@@ -55,6 +58,11 @@ def update_patient(id: int, new_patient: schemas.PatientCreate, db: Session = De
     patient = patient_query.first()
     if patient == None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Patient with id {id} not found!")
+    
+    # hash the pwd
+    hashed_password = utils.hash(new_patient.pwd)
+    new_patient.pwd = hashed_password
+
     patient_query.update(new_patient.dict(), synchronize_session=False)
     db.commit()
     return patient_query.first()

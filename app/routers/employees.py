@@ -2,7 +2,7 @@ from fastapi import Response, status, HTTPException, Depends, APIRouter
 from sqlalchemy.orm import Session
 
 from ..database import get_db
-from ..import models, schemas
+from ..import models, schemas, utils
 router = APIRouter(
     prefix='/employees',
     tags=['employees']
@@ -23,6 +23,10 @@ def get_employee(id: int, db: Session = Depends(get_db)):
 
 @router.post("/", status_code=status.HTTP_201_CREATED, response_model=schemas.EmployeeResponse)
 def create_employee(employee: schemas.EmployeeCreate, db: Session = Depends(get_db)):
+    # hash the pwd
+    hashed_password = utils.hash(employee.pwd)
+    employee.pwd = hashed_password
+
     new_employee = models.Employees(**employee.dict())
     db.add(new_employee)
     db.commit()
@@ -46,6 +50,11 @@ def update_employee(id: int, new_employee: schemas.EmployeeCreate, db: Session =
     employee = employee_query.first()
     if employee == None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Employee with id {id} not found!")
+    
+    # hash the pwd
+    hashed_password = utils.hash(new_employee.pwd)
+    new_employee.pwd = hashed_password
+
     employee_query.update(new_employee.dict(), synchronize_session=False)
     db.commit()
     return employee_query.first()
@@ -60,6 +69,11 @@ def update_employee(id: int, new_employee: schemas.EmployeeUpdate, db: Session =
     # print(employee_query)
     for k, v in new_employee.dict().items():
         if(v != None):
+            if (k == "pwd"):
+                # hash the pwd
+                # print(k, v)
+                hashed_password = utils.hash(v)
+                v = hashed_password
             setattr(employee, k, v)
     db.commit()
     return employee_query.first()

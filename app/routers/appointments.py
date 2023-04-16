@@ -2,14 +2,15 @@ from fastapi import Response, status, HTTPException, Depends, APIRouter
 from sqlalchemy.orm import Session
 
 from ..database import get_db
-from ..import models, schemas
+from ..import models, schemas, oauth2
 router = APIRouter(
     prefix='/appointments',
     tags=['appointments']
 )
 
 @router.get("/") # get all 
-def get_appointments(db: Session = Depends(get_db)):
+def get_appointments(db: Session = Depends(get_db), current_user = Depends(oauth2.get_current_employee)):
+    print(current_user.id)
     appointments = db.query(models.Appointments).all()
     return appointments
 

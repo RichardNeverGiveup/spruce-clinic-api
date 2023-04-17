@@ -3,7 +3,7 @@ name: Docker Build
 on: 
   push:
     branches:
-      - "master"
+      - master
 # env: #define env here will make env avaiable across job1 and job2
 #   DB_HOSTNAME=
 

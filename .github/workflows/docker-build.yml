@@ -79,18 +79,19 @@ jobs:
   #       run: echo ${{ steps.docker_build.outputs.digest }}
   job2:
     name: Deploy to AWS
-    # needs: job1
+    needs: job1
     runs-on: ubuntu-latest
     steps:
       - name: SSH into AWS
-        uses: appleboy/ssh-action@v0.1.10
+        uses: appleboy/ssh-action@v0.1.10   # 因为版本问题错了很多次
         with:
           host: ${{ secrets.AWS_EC2_PUBLIC_HOST }}
           username: ubuntu
           key: ${{ secrets.SSH_PRIVATE_KEY }} 
           #fingerprint: ${{ secrets.SSH_HOST_AWS_EC2_PUBLIC_HOST_FINGERPRINT }}
           script: |
-            cd /home/ubuntu/clinic-backend 
+            cd /home/ubuntu/clinic-backend
+            whoami 
             sudo docker-compose up -d
 
       

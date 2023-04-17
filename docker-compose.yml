@@ -2,14 +2,15 @@ version: "3"
 services:
   api:
     image: iscrl/spruceclinic  # get latest image from my docker repo
+    env_file: .env  # 指定环境变量文件,在服务器同级文件夹下存储.env file
     ports:
-      - 80:8000
-    environment:
-      - DATABASE_HOSTNAME=${DATABASE_HOSTNAME}   # 这些环境变量是宿主机的环境变量，我只需要在AWS本机设置号他们即可
-      - DATABASE_PORT=${DATABASE_PORT}
-      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
-      - DATABASE_NAME=${DATABASE_NAME}
-      - DATABASE_USERNAME=${DATABASE_USERNAME}
-      - SECRET_KEY=${SECRET_KEY}
-      - ALGORITHM=${ALGORITHM}
-      - ACCESS_TOKEN_EXPIRE_MINUTES=${ACCESS_TOKEN_EXPIRE_MINUTES}
+      - 8765:8000   
+    # environment:
+    #   - DB_HOSTNAME=${DB_HOSTNAME}   # 这些环境变量是宿主机的环境变量，我只需要在AWS本机设置号他们即可
+    #   - DB_PORT=${DB_PORT}
+    #   - DB_PASSWORD=${DB_PASSWORD}
+    #   - DB_NAME=${DB_NAME}
+    #   - DB_USERNAME=${DB_USERNAME}
+    #   - SECRET_KEY=${SECRET_KEY}
+    #   - ALGORITHM=${ALGORITHM}
+    #   - ACCESS_TOKEN_EXPIRE_MINUTES=${ACCESS_TOKEN_EXPIRE_MINUTES}

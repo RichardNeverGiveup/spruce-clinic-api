@@ -8,78 +8,78 @@ on:
 #   DB_HOSTNAME=
 
 jobs:
-  # job1:
-  #   name: build api images to dockerhub
-  #   environment:
-  #     name: testing
-  #   env: 
-  #     DB_HOSTNAME: ${{secrets.DB_HOSTNAME}}
-  #     DB_PORT: ${{secrets.DB_PORT}}
-  #     DB_PASSWORD: ${{secrets.DB_PASSWORD}}
-  #     DB_NAME: ${{secrets.DB_NAME}}
-  #     DB_USERNAME: ${{secrets.DB_USERNAME}}
-  #     SECRET_KEY: ${{secrets.SECRET_KEY}}
-  #     ALGORITHM: ${{secrets.ALGORITHM}}
-  #     ACCESS_TOKEN_EXPIRE_MINUTES: ${{secrets.ACCESS_TOKEN_EXPIRE_MINUTES}}
+  job1:
+    name: build api images to dockerhub
+    environment:
+      name: testing
+    env: 
+      DB_HOSTNAME: ${{secrets.DB_HOSTNAME}}
+      DB_PORT: ${{secrets.DB_PORT}}
+      DB_PASSWORD: ${{secrets.DB_PASSWORD}}
+      DB_NAME: ${{secrets.DB_NAME}}
+      DB_USERNAME: ${{secrets.DB_USERNAME}}
+      SECRET_KEY: ${{secrets.SECRET_KEY}}
+      ALGORITHM: ${{secrets.ALGORITHM}}
+      ACCESS_TOKEN_EXPIRE_MINUTES: ${{secrets.ACCESS_TOKEN_EXPIRE_MINUTES}}
 
-  #   # services: # use a docker database for running our test cases
-  #   #   postgres:
-  #   #     image: postgres
-  #   #     env: 
-  #   #       POSTGRES_PASSWORD: ${{secrets.DB_PASSWORD}}
-  #   #       POSTGRES_DB: ${{secrets.DB_NAME}}_test   # why _test here? related to the test cases design!
-  #   #     ports: 
-  #   #       - 5432:5432
-  #   #     options: >-
-  #   #       --health-cmd pg_isready
-  #   #       --health-interval 10s
-  #   #       --health-timeout 5s
-  #   #       --health-retries 5
+    # services: # use a docker database for running our test cases
+    #   postgres:
+    #     image: postgres
+    #     env: 
+    #       POSTGRES_PASSWORD: ${{secrets.DB_PASSWORD}}
+    #       POSTGRES_DB: ${{secrets.DB_NAME}}_test   # why _test here? related to the test cases design!
+    #     ports: 
+    #       - 5432:5432
+    #     options: >-
+    #       --health-cmd pg_isready
+    #       --health-interval 10s
+    #       --health-timeout 5s
+    #       --health-retries 5
 
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     # - name: pulling git repo
-  #     #   uses: actions/checkout@v2
-  #     # - name: Installing python version 3.9
-  #     #   uses: actions/setup-python@v2
-  #     #   with: 
-  #     #     python-version: "3.9"
-  #     # - name: update pip
-  #     #   uses: python -m pip install --upgrade pip
-  #     # - name: install all dependencies
-  #     #   uses: pip install -r requirements.txt
-  #     # - name: test with pytest
-  #     #   uses: |
-  #     #     pip install pytest
-  #     #     pytest
-  #     - name: Check out code
-  #       uses: actions/checkout@v2
+    runs-on: ubuntu-latest
+    steps:
+      # - name: pulling git repo
+      #   uses: actions/checkout@v2
+      # - name: Installing python version 3.9
+      #   uses: actions/setup-python@v2
+      #   with: 
+      #     python-version: "3.9"
+      # - name: update pip
+      #   uses: python -m pip install --upgrade pip
+      # - name: install all dependencies
+      #   uses: pip install -r requirements.txt
+      # - name: test with pytest
+      #   uses: |
+      #     pip install pytest
+      #     pytest
+      - name: Check out code
+        uses: actions/checkout@v2
 
-  #     - name: Login to Docker Hub
-  #       uses: docker/login-action@v1
-  #       with:
-  #         username: ${{ secrets.DOCKER_HUB_USERNAME }}
-  #         password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}      
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}      
 
-  #     - name: Set up Docker Buildx
-  #       uses: docker/setup-buildx-action@v1
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
 
-  #     - name: Build and push
-  #       id: docker_build  # 根据我在dockerfile里面的设置构建并且上传新的镜像到dockerhub
-  #       uses: docker/build-push-action@v2
-  #       with:
-  #         context: ./
-  #         file: ./Dockerfile
-  #         builder: ${{ steps.buildx.outputs.name }}
-  #         push: true
-  #         tags: ${{ secrets.DOCKER_HUB_USERNAME }}/spruceclinic:latest
-  #         cache-from: type=local,src=/tmp/.buildx-cache
-  #         cache-to: type=local,dest=/tmp/.buildx-cache
-  #     - name: Image digest
-  #       run: echo ${{ steps.docker_build.outputs.digest }}
+      - name: Build and push
+        id: docker_build  # 根据我在dockerfile里面的设置构建并且上传新的镜像到dockerhub
+        uses: docker/build-push-action@v2
+        with:
+          context: ./
+          file: ./Dockerfile
+          builder: ${{ steps.buildx.outputs.name }}
+          push: true
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/spruceclinic:latest
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
+      - name: Image digest
+        run: echo ${{ steps.docker_build.outputs.digest }}
   job2:
     name: Deploy to AWS
-    # needs: job1
+    needs: job1
     runs-on: ubuntu-latest
     steps:
       - name: SSH into AWS
@@ -88,7 +88,6 @@ jobs:
           host: ${{ secrets.AWS_EC2_PUBLIC_HOST }}
           username: ubuntu
           key: ${{ secrets.SSH_PRIVATE_KEY }} 
-          #fingerprint: ${{ secrets.SSH_HOST_AWS_EC2_PUBLIC_HOST_FINGERPRINT }}
           script: |
             cd /home/ubuntu/clinic-backend
             whoami 

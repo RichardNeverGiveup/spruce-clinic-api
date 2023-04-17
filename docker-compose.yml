@@ -2,6 +2,7 @@ version: "3"
 services:
   api:
     image: iscrl/spruceclinic  # get latest image from my docker repo
+    restart: always  # 指定 reboot服务器以后本服务自启动
     env_file: .env  # 指定环境变量文件,在服务器同级文件夹下存储.env file
     ports:
       - 8765:8000   

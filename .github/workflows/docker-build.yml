@@ -76,9 +76,23 @@ jobs:
           cache-to: type=local,dest=/tmp/.buildx-cache
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
-  # job2:
+  job2:
+    name: Deploy to AWS
+    needs: job1
+    runs-on: ubuntu-latest
+    steps:
+      - name: SSH into AWS
+        uses: appleboy/ssh-action@v0.1.2
+        with:
+          host: ${{ secrets.AWS_EC2_PUBLIC_HOST }}
+          username: ubuntu
+          key: ${{ secrets.SSH_PRIVATE_KEY }} 
+          script: |
+            cd /home/ubuntu/clinic-backend 
+            sudo docker-compose up -d
+
+      
 
 
 
 
-  

@@ -21,7 +21,7 @@ def index():
 
 @app.get("/hiddenroute")
 def hidden():
-    return {"data": "This is a test for CI/CD with github actions v0.2"}
+    return {"data": "This is a test for CI/CD with github actions v0.3, CI/CD finished"}
 
 app.include_router(employees.router)
 app.include_router(roles.router)

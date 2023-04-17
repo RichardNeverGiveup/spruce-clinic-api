@@ -64,7 +64,7 @@ jobs:
         uses: docker/setup-buildx-action@v1
 
       - name: Build and push
-        id: docker_build
+        id: docker_build  # 根据我在dockerfile里面的设置构建并且上传新的镜像到dockerhub
         uses: docker/build-push-action@v2
         with:
           context: ./

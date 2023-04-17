@@ -95,7 +95,7 @@ class Token(BaseModel):
     access_token: str
     token_type: str
 
-class TokenData(BaseModel):
+class TokenDataEmployee(BaseModel):
     id: int
     role_id: int
 

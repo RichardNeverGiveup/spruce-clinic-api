@@ -16,12 +16,12 @@ def login_employee(credentials: OAuth2PasswordRequestForm = Depends(), db: Sessi
 
     if not employee:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=f"invalid username or email.")
-    # print(employee.pwd)
+    
     if not utils.verify(credentials.password, employee.pwd):
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=f"invalid password.")
     
     # create a token
-    access_token = oauth2.create_access_token(data={"id": employee.id, "role_id": employee.role_id})
+    access_token = oauth2.create_access_token(data={"scope": "employee", "id": employee.id, "role_id": employee.role_id})
 
     return {"access_token" : access_token, "token_type": "bearer"}
 
@@ -35,6 +35,6 @@ def login_patient(credentials: OAuth2PasswordRequestForm = Depends(), db: Sessio
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=f"invalid password.")
     
     # create a token
-    access_token = oauth2.create_access_token(data={"pid": patient.pid})
+    access_token = oauth2.create_access_token(data={"scope": "patient", "pid": patient.pid})
 
     return {"access_token" : access_token, "token_type": "bearer"}

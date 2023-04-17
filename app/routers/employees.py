@@ -2,19 +2,25 @@ from fastapi import Response, status, HTTPException, Depends, APIRouter
 from sqlalchemy.orm import Session
 
 from ..database import get_db
-from ..import models, schemas, utils
+from ..import models, schemas, utils, oauth2
 router = APIRouter(
     prefix='/employees',
     tags=['employees']
 )
 
+ADMIN = 15 # 15 means the role_type of admin, need to use a more elegant way to do this
+
 @router.get("/") # get all 
-def get_employees(db: Session = Depends(get_db)):
+def get_employees(db: Session = Depends(get_db), current_employee:schemas.TokenDataEmployee=Depends(oauth2.get_current_employee)):
+    if current_employee.role_id != ADMIN:  
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=f"Only admin can check all the employees!")
     employees = db.query(models.Employees).all()
     return employees
 
 @router.get("/{id}") # get one single
-def get_employee(id: int, db: Session = Depends(get_db)):
+def get_employee(id: int, db: Session = Depends(get_db), current_employee:schemas.TokenDataEmployee=Depends(oauth2.get_current_employee)):
+    if current_employee.id != id:  # make sure only employees themselves can only see their profiles
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=f"You can only browse your only employee profile")
     
     employee = db.query(models.Employees).filter(models.Employees.id == id).first()
     if not employee:
@@ -22,7 +28,9 @@ def get_employee(id: int, db: Session = Depends(get_db)):
     return employee
 
 @router.post("/", status_code=status.HTTP_201_CREATED, response_model=schemas.EmployeeResponse)
-def create_employee(employee: schemas.EmployeeCreate, db: Session = Depends(get_db)):
+def create_employee(employee: schemas.EmployeeCreate, db: Session = Depends(get_db), current_employee:schemas.TokenDataEmployee=Depends(oauth2.get_current_employee)):
+    if current_employee.role_id != ADMIN:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=f"Only admin can create a new employee profile!")
     # hash the pwd
     hashed_password = utils.hash(employee.pwd)
     employee.pwd = hashed_password
@@ -34,7 +42,9 @@ def create_employee(employee: schemas.EmployeeCreate, db: Session = Depends(get_
     return new_employee
 
 @router.delete("/{id}", status_code=status.HTTP_204_NO_CONTENT)
-def delete_employee(id: int, db: Session = Depends(get_db)):
+def delete_employee(id: int, db: Session = Depends(get_db), current_employee:schemas.TokenDataEmployee=Depends(oauth2.get_current_employee)):
+    if current_employee.id != id:  # make sure only employees themselves can only delete their profile
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=f"You can only delete your only employee profile")
     employee_query = db.query(models.Employees).filter(models.Employees.id == id)
     employee = employee_query.first()
     if employee == None:
@@ -45,7 +55,9 @@ def delete_employee(id: int, db: Session = Depends(get_db)):
     return Response(status_code=status.HTTP_204_NO_CONTENT)
 
 @router.put("/{id}", response_model=schemas.EmployeeResponse)
-def update_employee(id: int, new_employee: schemas.EmployeeCreate, db: Session = Depends(get_db)):
+def update_employee(id: int, new_employee: schemas.EmployeeCreate, db: Session = Depends(get_db), current_employee:schemas.TokenDataEmployee=Depends(oauth2.get_current_employee)):
+    if current_employee.role_id != ADMIN or current_employee.id != id:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=f"Only admin and profile owner can use this api")
     employee_query = db.query(models.Employees).filter(models.Employees.id == id)
     employee = employee_query.first()
     if employee == None:
@@ -61,7 +73,8 @@ def update_employee(id: int, new_employee: schemas.EmployeeCreate, db: Session =
 
 @router.patch("/{id}", response_model=schemas.EmployeeResponse)
 def update_employee(id: int, new_employee: schemas.EmployeeUpdate, db: Session = Depends(get_db)):
-    """this patch method is for updating some fields not all of them"""
+    """Please use this api only for debugging!!!!, no authentication added here
+    this patch method is for updating some fields not all of them."""
     employee_query = db.query(models.Employees).filter(models.Employees.id == id)
     employee = employee_query.first()
     if employee == None:

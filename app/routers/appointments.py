@@ -9,8 +9,7 @@ router = APIRouter(
 )
 
 @router.get("/") # get all 
-def get_appointments(db: Session = Depends(get_db), current_user = Depends(oauth2.get_current_employee)):
-    print(current_user.id)
+def get_appointments(db: Session = Depends(get_db)):
     appointments = db.query(models.Appointments).all()
     return appointments
 

@@ -19,6 +19,10 @@ app.add_middleware(
 def index():
     return {"data": "welcome to spruce clinic api"}
 
+@app.get("/hiddenroute")
+def hidden():
+    return {"data": "This is a test for CI/CD with github actions"}
+
 app.include_router(employees.router)
 app.include_router(roles.router)
 app.include_router(contracts.router)

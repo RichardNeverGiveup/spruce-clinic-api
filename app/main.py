@@ -23,6 +23,10 @@ def index():
 def hidden():
     return {"data": "This is a test for CI/CD with github actions v0.3, CI/CD finished"}
 
+@app.get("/XXD")
+def hidden():
+    return {"data": "This is a test for XXD"}
+
 app.include_router(employees.router)
 app.include_router(roles.router)
 app.include_router(contracts.router)
